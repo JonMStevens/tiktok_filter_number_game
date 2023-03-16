@@ -11,11 +11,11 @@ def take_turn(game_list: "list[int]") -> bool:
     next_num = random.randint(1, 999)
     print(f"Next number: {next_num}")
     if (game_won(game_list, next_num)):
-        print("You win 🎖")
+        print("You win :D")
         game_list = [0] * 20
         return False
     if (game_lost(game_list, next_num)):
-        print("You lose 😭")
+        print("You lose D:")
         game_list = [0] * 20
         return False
     user_input = get_user_input(game_list, next_num)
