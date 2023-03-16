@@ -4,7 +4,7 @@ main_game_list = [0] * 20
 
 
 def print_game_state(game_list: "list[int]") -> None:
-    print('\n'.join([f'{i + 1}: {x}' for i, x in enumerate(game_list)]))
+    print('\n'.join([f'{i + 1}: {x or ""}' for i, x in enumerate(game_list)]))
 
 
 def take_turn(game_list: "list[int]") -> bool:
