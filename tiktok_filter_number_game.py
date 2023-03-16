@@ -49,7 +49,11 @@ def list_is_sorted(game_list: "list[int]"):
 
 def get_user_input(game_list: "list[int]", next_num: int) -> int:
     while (1):
-        i = int(input("choose your spot ->")) - 1
+        try:
+            i = int(input("choose your spot ->")) - 1
+        except:
+            continue
+
         if not 0 <= i <= 20:
             print("Please enter a number between 1 and 20")
             continue
