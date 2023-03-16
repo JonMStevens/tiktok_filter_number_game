@@ -3,22 +3,24 @@ import random
 main_game_list = [0] * 20
 
 
-def print_game_state(game_list: "list[int]"):
+def print_game_state(game_list: "list[int]") -> None:
     print('\n'.join([f'{i + 1}: {x}' for i, x in enumerate(game_list)]))
 
 
-def take_turn(game_list: "list[int]"):
+def take_turn(game_list: "list[int]") -> bool:
     next_num = random.randint(1, 999)
     print(f"Next number: {next_num}")
     if (game_won(game_list, next_num)):
         print("You win 🎖")
         game_list = [0] * 20
-        return
+        return False
     if (game_lost(game_list, next_num)):
         print("You lose 😭")
         game_list = [0] * 20
+        return False
     user_input = get_user_input(game_list, next_num)
     game_list[user_input] = next_num
+    return True
 
 
 def game_won(game_list: "list[int]", next_num: int) -> bool:
@@ -34,12 +36,23 @@ def game_won(game_list: "list[int]", next_num: int) -> bool:
 
 
 def game_lost(game_list: "list[int]", next_num: int) -> bool:
-    # todo define other loss condition
     turn_num = sum(1 for num in game_list if num > 0) + 1
-    return not game_won(game_list, next_num) and turn_num >= 20
+    if turn_num >= 20:
+        return not game_won(game_list, next_num)
+
+    next_largest = next(
+        (i for i, n in enumerate(game_list) if n > next_num), -1)
+
+    if next_largest == -1:
+        return game_list[-1] != 0
+
+    if next_largest == 0:
+        return True
+
+    return game_list[next_largest - 1] != 0
 
 
-def list_is_sorted(game_list: "list[int]"):
+def list_is_sorted(game_list: "list[int]") -> bool:
     if len(list < 2):
         return True
 
@@ -76,6 +89,7 @@ def get_user_input(game_list: "list[int]", next_num: int) -> int:
 
 
 if __name__ == "__main__":
-    while (1):
+    active = True
+    while (active):
         print_game_state(main_game_list)
-        take_turn(main_game_list)
+        active = take_turn(main_game_list)
